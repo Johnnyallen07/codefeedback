@@ -9,4 +9,4 @@ setup(
     install_requires=[  # List of dependencies
         'numpy',  # Example dependency
     ],
-)
+) 
