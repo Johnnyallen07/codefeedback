@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='codeval',  # Replace with your package name
+    name='codefeedback',  # Replace with your package name
     version='0.1.0',  # Replace with your package version
     description='na',  # Replace with a short description
     packages=find_packages(),  # Automatically find and include packages

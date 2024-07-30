@@ -1,1 +1,1 @@
-from .hello import hi
+from .codeval import load_ipython_extension
