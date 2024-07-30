@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec4c6df-04af-4ba7-890c-c1e3e1eebae1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/codefeedback/codeval.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/format.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/general_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/answer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/hello.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +142,7 @@
       <workItem from="1722263775719" duration="577000" />
       <workItem from="1722264377590" duration="1085000" />
       <workItem from="1722265533365" duration="770000" />
-      <workItem from="1722317349850" duration="6349000" />
+      <workItem from="1722317349850" duration="6738000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;init&quot;">
       <created>1722264210733</created>
@@ -180,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722265547960</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="&quot;update general check for the first step!&quot;">
+      <created>1722324921261</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1722324921261</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +187,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;init&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;init&quot;" />
+    <MESSAGE value="&quot;update general check for the first step!&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;update general check for the first step!&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
