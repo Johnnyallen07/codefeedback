@@ -9,7 +9,7 @@ import types
 import astor
 
 try:
-    from .global_variable_check import variable_content, check_global_variable_content
+    from .global_variable_check import variable_content, check_global_variable_content, extract_modules
     from .format import local_missing_modules_and_variables_format
 except:
     from global_variable_check import variable_content, check_global_variable_content
@@ -116,12 +116,4 @@ def check_local_variable_content(response, answer, check_list: list):
             return False, f"""The variable of '{"', '".join(remaining_check_list)}' is not defined"""
 
 
-def extract_modules(var_dict):
 
-    modules = []
-    for var_name, module_part in var_dict.items():
-        if isinstance(module_part, types.ModuleType):
-            modules.append((var_name, module_part.__name__))
-    for var_name, _ in modules:
-        del var_dict[var_name]
-    return modules, var_dict

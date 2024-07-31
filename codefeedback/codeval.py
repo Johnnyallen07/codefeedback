@@ -2,16 +2,19 @@
 import random
 import subprocess
 
+from IPython import get_ipython
+
 from .general_check import check, check_syntax
 
-from IPython.core.magic import Magics, magics_class, line_magic
+from IPython.core.magic import Magics, magics_class, line_magic, register_line_magic
 
 from .global_variable_check import check_global_variable_content
 from .local_variable_check import check_local_variable_content
 from .structure_check import check_structure
 
 CONFIG = {
-    'check_structure': False
+    'check_structure': False,
+    'modules': ""
 }
 
 
@@ -20,6 +23,7 @@ class MyMagics(Magics):
     def __init__(self, shell):
         super().__init__(shell)
         self.solutions = {}
+        self.modules = ""
 
     @line_magic
     def load(self, line):
@@ -43,14 +47,30 @@ class MyMagics(Magics):
 
     @line_magic
     def check(self, line):
-        task_name, *code_lines = line.split('\n', 1)
-        response = '\n'.join(code_lines)
+        # Get the cell content up to this point
+        ip = get_ipython()
+        response_lines = ip.user_ns['_ih'][-1].strip().splitlines()
+        response_lines.pop()
+        response = '\n'.join(response_lines)
+        task_name = line.strip()
         check_list, answer = self.solutions[task_name]
-        evaluation_function(response, answer, check_list)
+        if self.modules == "":
+            self.modules = CONFIG['modules']
+        evaluation_function(response, answer, check_list, self.modules)
+
+    @line_magic
+    def load_module(self, line):
+        ip = get_ipython()
+        module_lines = ip.user_ns['_ih'][-1].strip().splitlines()
+        module_lines.pop()
+        modules = ('\n'.join(module_lines)).strip()
+        self.modules = modules
+        print("Successfully loaded required modules")
 
 
 def load_ipython_extension(ipython):
     ipython.register_magics(MyMagics)
+    print("Successfully loaded the extension")
 
 
 def get_variables_from_pyscript(file_path):
@@ -61,9 +81,17 @@ def get_variables_from_pyscript(file_path):
     return variables
 
 
-def evaluation_function(response, answer, check_list: list):
+def evaluation_function(response, answer, check_list, modules):
+    if isinstance(check_list, str):
+        check_list = [var.strip() for var in check_list.split(',')]
+
     wrong_msg = random.choice(["The response is not correct: ", "The code has some problems: ", "Wrong: "])
     correct_msg = random.choice(["Good Job!", "Well Done!", "Awesome"])
+
+    # the missing module should be imported manually:
+    response = f"{modules}\n{response}"
+    answer = f"{modules}\n{answer}"
+
     general_feedback = check(response)
     is_correct_answer, msg = check_syntax(answer)
     if not is_correct_answer:
@@ -141,3 +169,7 @@ def check_each_letter(response, answer):
     return answer.replace(" ", "").replace("\t", "").replace("\n", "").replace("\r", "") == response.replace(
         " ", "").replace("\t", "").replace("\n", "").replace("\r", "")
 
+
+def load_module(modules):
+    CONFIG['modules'] = modules
+    print("Successfully loaded required modules")

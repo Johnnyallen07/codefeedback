@@ -132,13 +132,11 @@ def is_equal(variable_name, response_variable_content, answer_variable_content, 
         error_var_contents.append(variable_name)
         return True, "", error_var_contents, remaining_check_list
 
-
-if __name__ == '__main__':
-    str = """
-import sys
-
-a = 5
-b = 10
-sys.exit()
-    """
-    print(variable_content(str))
+def extract_modules(var_dict):
+    modules = []
+    for var_name, module_part in var_dict.items():
+        if isinstance(module_part, types.ModuleType):
+            modules.append((var_name, module_part.__name__))
+    for var_name, _ in modules:
+        del var_dict[var_name]
+    return modules, var_dict
