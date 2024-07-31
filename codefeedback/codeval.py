@@ -1,8 +1,18 @@
 # my_extension.py
 import random
+import subprocess
+
 from .general_check import check, check_syntax
 
 from IPython.core.magic import Magics, magics_class, line_magic
+
+from .global_variable_check import check_global_variable_content
+from .local_variable_check import check_local_variable_content
+from .structure_check import check_structure
+
+CONFIG = {
+    'check_structure': False
+}
 
 
 @magics_class
@@ -44,21 +54,90 @@ def load_ipython_extension(ipython):
 
 
 def get_variables_from_pyscript(file_path):
-    # Read the PyScript file
     with open(file_path, 'r') as file:
         script_content = file.read()
-
-    # Create a dictionary to hold the global variables
-    global_vars = {}
-
-    # Execute the script content in the global context
-    exec(script_content, globals(), global_vars)
-
-    # Return the global variables found in the script
-    return global_vars
+    variables = {}
+    exec(script_content, globals(), variables)
+    return variables
 
 
 def evaluation_function(response, answer, check_list: list):
-    correct_feedback = random.choice(["Good Job!", "Well Done!", "Awesome"])
+    wrong_msg = random.choice(["The response is not correct: ", "The code has some problems: ", "Wrong: "])
+    correct_msg = random.choice(["Good Job!", "Well Done!", "Awesome"])
     general_feedback = check(response)
-    print(general_feedback)
+    is_correct_answer, msg = check_syntax(answer)
+    if not is_correct_answer:
+        print("SyntaxError: Please contact your teacher to give correct answer!")
+        return
+    if general_feedback != "General check passed!":
+        print(wrong_msg + general_feedback)
+        return
+
+    if CONFIG['check_structure']:
+        if not check_structure(response, answer):
+            print(wrong_msg + "The methods or classes are not correctly defined.")
+            return
+
+    if msg:
+        if not check_answer_with_output(response, msg):
+            # if check_list != 0, it means that output is not the importance
+            if len(check_list) == 0:
+                error_feedback = "The output is different to given answer: \n"
+                print(wrong_msg + error_feedback)
+                return
+        else:
+            print(correct_msg)
+            return
+    else:
+        if check_each_letter(response, answer):
+            print(correct_msg)
+            return
+
+    is_correct, feedback, remaining_check_list, response = check_global_variable_content(response, answer, check_list)
+    if not is_correct:
+        print(wrong_msg + feedback)
+        return
+    else:
+        if len(remaining_check_list) == 0:
+            print(correct_msg)
+            return
+    is_correct, feedback = check_local_variable_content(response, answer, remaining_check_list)
+    if is_correct:
+        if feedback != "NotDefined":
+            print(correct_msg)
+            return
+    else:
+        print(wrong_msg + feedback)
+        return
+
+    print("The AI feedback functionality will be implemented after permission and security check")
+
+
+def config(check_structure: bool = False):
+    CONFIG['check_structure'] = check_structure
+
+
+def check_answer_with_output(response, output_msg):
+    """
+    The function is called iff the answer is unique. i.e. aList = [1,2,3,4,5] is the unique answer
+    Notice that styles (at least they can pass general check) are NOT sensitive
+    """
+    try:
+        res_result = subprocess.run(['python', '-c', response], capture_output=True, text=True)
+        if res_result.returncode != 0:
+            res_feedback = f"Error: {res_result.stderr.strip()}"
+        else:
+            res_feedback = res_result.stdout.strip()
+    except Exception as e:
+        res_feedback = f"Exception occurred: {str(e)}"
+    return check_each_letter(res_feedback, output_msg)
+
+
+def check_each_letter(response, answer):
+    """
+    The function is called iff the answer and the response are unique. i.e. aList = [1,2,3,4,5] is the unique answer and response
+    Notice that styles (at least they can pass general check) are NOT sensitive
+    """
+    return answer.replace(" ", "").replace("\t", "").replace("\n", "").replace("\r", "") == response.replace(
+        " ", "").replace("\t", "").replace("\n", "").replace("\r", "")
+

@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec4c6df-04af-4ba7-890c-c1e3e1eebae1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/codefeedback/global_variable_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codefeedback/local_variable_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codefeedback/same_variable_content_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codefeedback/structure_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/codeval.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/codeval.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/answer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,19 +43,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Desktop/CT project/codefeedback/codefeedback",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/CT project/codefeedback/codefeedback&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\CT project\codefeedback\codefeedback" />
@@ -142,7 +151,9 @@
       <workItem from="1722263775719" duration="577000" />
       <workItem from="1722264377590" duration="1085000" />
       <workItem from="1722265533365" duration="770000" />
-      <workItem from="1722317349850" duration="6738000" />
+      <workItem from="1722317349850" duration="7458000" />
+      <workItem from="1722337826701" duration="3658000" />
+      <workItem from="1722409253221" duration="1830000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;init&quot;">
       <created>1722264210733</created>
@@ -179,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722324921261</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="&quot;update general check for the first step!&quot;">
+      <created>1722325284620</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722325284620</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
