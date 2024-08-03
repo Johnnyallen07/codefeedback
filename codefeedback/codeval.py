@@ -3,11 +3,8 @@ import random
 import subprocess
 
 from IPython import get_ipython
-
 from .general_check import check, check_syntax
-
-from IPython.core.magic import Magics, magics_class, line_magic, register_line_magic
-
+from IPython.core.magic import Magics, magics_class, line_magic
 from .global_variable_check import check_global_variable_content
 from .local_variable_check import check_local_variable_content
 from .structure_check import check_structure
@@ -84,7 +81,9 @@ def get_variables_from_pyscript(file_path):
 def evaluation_function(response, answer, check_list, modules):
     if isinstance(check_list, str):
         check_list = [var.strip() for var in check_list.split(',')]
-
+    is_defined = True
+    if len(check_list) == 0:
+        is_defined = False
     wrong_msg = random.choice(["The response is not correct: ", "The code has some problems: ", "Wrong: "])
     correct_msg = random.choice(["Good Job!", "Well Done!", "Awesome"])
 
@@ -121,22 +120,26 @@ def evaluation_function(response, answer, check_list, modules):
             print(correct_msg)
             return
 
-    is_correct, feedback, remaining_check_list, response = check_global_variable_content(response, answer, check_list)
-    if not is_correct:
-        print(wrong_msg + feedback)
-        return
-    else:
-        if len(remaining_check_list) == 0:
-            print(correct_msg)
+    if is_defined:
+
+        is_correct, feedback, remaining_check_list, response = check_global_variable_content(response, answer,
+                                                                                             check_list)
+        if not is_correct:
+            print(wrong_msg + feedback)
             return
-    is_correct, feedback = check_local_variable_content(response, answer, remaining_check_list)
-    if is_correct:
-        if feedback != "NotDefined":
-            print(correct_msg)
+        else:
+            if len(remaining_check_list) == 0:
+                print(correct_msg)
+                return
+
+        is_correct, feedback = check_local_variable_content(response, answer, remaining_check_list)
+        if is_correct:
+            if feedback != "NotDefined":
+                print(correct_msg)
+                return
+        else:
+            print(wrong_msg + feedback)
             return
-    else:
-        print(wrong_msg + feedback)
-        return
 
     print("The AI feedback functionality will be implemented after permission and security check")
 

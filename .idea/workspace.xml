@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec4c6df-04af-4ba7-890c-c1e3e1eebae1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/codefeedback/param_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codefeedback/codeval.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/codeval.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codefeedback/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/format.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codefeedback/global_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/global_variable_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codefeedback/local_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/local_variable_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/same_variable_content_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/same_variable_content_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/answer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.ipynb" afterDir="false" />
     </list>
@@ -152,7 +152,9 @@
       <workItem from="1722265533365" duration="770000" />
       <workItem from="1722317349850" duration="7458000" />
       <workItem from="1722337826701" duration="3658000" />
-      <workItem from="1722409253221" duration="6230000" />
+      <workItem from="1722409253221" duration="6337000" />
+      <workItem from="1722672032534" duration="835000" />
+      <workItem from="1722692042778" duration="1477000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;init&quot;">
       <created>1722264210733</created>
@@ -203,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722411209219</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update all functionalities implemented from compareConstruct">
+      <created>1722415587040</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1722415587040</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,11 +222,12 @@
     <MESSAGE value="&quot;init&quot;" />
     <MESSAGE value="&quot;update general check for the first step!&quot;" />
     <MESSAGE value="update most functionalities implemented from compareConstruct" />
-    <option name="LAST_COMMIT_MESSAGE" value="update most functionalities implemented from compareConstruct" />
+    <MESSAGE value="update all functionalities implemented from compareConstruct" />
+    <option name="LAST_COMMIT_MESSAGE" value="update all functionalities implemented from compareConstruct" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/codefeedback$main.coverage" NAME="main Coverage Results" MODIFIED="1722318391895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/codefeedback$answer.coverage" NAME="answer Coverage Results" MODIFIED="1722415086289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/codefeedback$answer.coverage" NAME="answer Coverage Results" MODIFIED="1722693227139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/codefeedback$hello.coverage" NAME="codeval Coverage Results" MODIFIED="1722321237441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
   </component>
 </project>
