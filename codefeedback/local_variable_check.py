@@ -13,63 +13,11 @@ try:
     from .format import local_missing_modules_and_variables_format
     from .param_generator import param_generator, guess_param_type
     from .same_variable_content_check import check_same_content_with_different_variable
+    from .method_utils import extract_params_and_body
 except:
     from global_variable_check import variable_content, check_global_variable_content
     from format import local_missing_modules_and_variables_format
-
-
-class MethodParamBodyExtractor(ast.NodeVisitor):
-
-    def extract_method_names(self, astree):
-
-        for child in ast.iter_child_nodes(astree):
-
-            if isinstance(child, ast.FunctionDef):
-                self.method_list.append(child.name)
-                self.extract_method_names(child)
-
-    def __init__(self, astree):
-        self.method_params_and_body_list = {}
-        self.method_list = []
-        self.extract_method_names(astree)
-
-    def visit_FunctionDef(self, node):
-        for method_name in self.method_list:
-            if node.name == method_name:
-                args = [arg.arg for arg in node.args.args]
-                body_ast = ast.parse(''.join(astor.to_source(node) for node in node.body))
-                transformer = ReturnToExitTransformer()
-                transformed_ast = transformer.visit(body_ast)
-                body = astor.to_source(transformed_ast)
-                self.method_params_and_body_list[method_name] = (args, body)
-            self.generic_visit(node)
-
-
-class ReturnToExitTransformer(ast.NodeTransformer):
-    def visit_Return(self, node):
-        assign_node = ast.Assign(
-            targets=[ast.Name(id='TMP', ctx=ast.Store())],
-            value=node.value
-        )
-        exit_node = ast.Expr(
-            value=ast.Call(
-                func=ast.Attribute(
-                    value=ast.Name(id='sys', ctx=ast.Load()),
-                    attr='exit',
-                    ctx=ast.Load()
-                ),
-                args=[],
-                keywords=[]
-            )
-        )
-        return [assign_node, exit_node]
-
-
-def extract_params_and_body(code_str):
-    astree = ast.parse(code_str)
-    extractor = MethodParamBodyExtractor(astree)
-    extractor.visit(astree)
-    return extractor.method_params_and_body_list
+    from method_utils import extract_params_and_body
 
 
 # code = """

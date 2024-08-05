@@ -1,7 +1,9 @@
+from .globals import get_global_variables
+
 try:
-    from .format import message_format, response_format
+    from .format import message_format, response_format, variable_format
 except ImportError:
-    from format import message_format, response_format
+    from format import message_format, response_format, variable_format
 import subprocess
 
 
@@ -45,7 +47,7 @@ def check(code_string):
     # module_import(formatted_code_lines)
     is_syntax_correct, msg = check_syntax(code_string)
     if not is_syntax_correct:
-        return f"Error occurs, please check the details below: <br>{message_format(msg)}"
+        return f"Error occurs, please check the details below: \n{message_format(msg)}"
 
     return "General check passed!"
 
@@ -63,3 +65,11 @@ def check_syntax(code_string) -> (bool, str):
             return True, result.stdout.decode('utf-8')
     except Exception:
         return False, "Exception occurs during execution"
+
+
+def add_missing_global_variables(code_str, side):
+    global_var_dict, global_method_dict = get_global_variables(code_str, side)
+    var_str = variable_format(global_var_dict)
+    method_str = "\n".join(body for body in global_method_dict.values())
+    return f"{var_str}\n{method_str}"
+

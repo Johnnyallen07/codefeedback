@@ -16,11 +16,14 @@ class VariableVisitor(ast.NodeVisitor):
     def __init__(self):
         self.variables = set()
 
+    def visit_FunctionDef(self, node):
+        # Skip the function name and only visit the body
+        for stmt in node.body:
+            self.visit(stmt)
     def visit_Name(self, node):
         if node.id not in dir(builtins):
             self.variables.add(node.id)
         self.generic_visit(node)
-
 
 # Function to execute the code and check the content of variables
 def variable_content(code_str) -> dict:
