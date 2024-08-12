@@ -99,17 +99,30 @@ def extract_method_names(astree):
     return method_names
 
 
+import ast
+
+
+def extract_method_attr(code_str):
+    method_names = set()
+    tree = ast.parse(code_str)
+
+    class MethodVisitor(ast.NodeVisitor):
+        def visit_Call(self, node):
+            if isinstance(node.func, ast.Attribute):
+                method_names.add(node.func.attr)
+            self.generic_visit(node)
+
+    visitor = MethodVisitor()
+    visitor.visit(tree)
+
+    return method_names
+
+
 if __name__ == '__main__':
     code_str = """
-def f():
-    pass
-
-def g():
-    pass
-
-def h():
-    pass
-    
-    
+import plt
+plt.plot()
+plt.scatter("hist", "fuck")
+hi.hello().plti().Methods('hi', 'why')
     """
-    print(extract_method_names(ast.parse(code_str)))
+    print(extract_method_attr(ast.parse(code_str)))

@@ -3,23 +3,23 @@ import subprocess
 from IPython.core.magic import Magics, magics_class, line_magic
 from IPython import get_ipython
 
-try:
-
-    from .global_variable_check import check_global_variable_content, variable_content
-    from .local_variable_check import check_local_variable_content
-    from .structure_check import check_structure
-    from .globals import set_global_var_dict, set_global_method_dict
-    from .method_utils import extract_names_and_body
-    from .general_check import check, check_syntax, add_missing_global_variables
-except ImportError:
-    from general_check import check, check_syntax
-    from global_variable_check import check_global_variable_content, variable_content
-    from local_variable_check import check_local_variable_content
-    from structure_check import check_structure
-    from globals import set_global_var_dict, set_global_method_dict
-    from method_utils import extract_names_and_body
-
-
+# try:
+from .plt_manage import is_image_exist, hide_images
+from .global_variable_check import check_global_variable_content, variable_content
+from .local_variable_check import check_local_variable_content, extract_modules
+from .structure_check import check_structure
+from .globals import set_global_var_dict, set_global_method_dict
+from .method_utils import extract_names_and_body
+from .general_check import check, check_syntax, add_missing_global_variables
+# except ImportError:
+#     pass
+#     from general_check import check, check_syntax
+#     from global_variable_check import check_global_variable_content, variable_content
+#     from local_variable_check import check_local_variable_content
+#     from structure_check import check_structure
+#     from globals import set_global_var_dict, set_global_method_dict
+#     from method_utils import extract_names_and_body
+#     from plt_manage import is_image_exist, hide_image_output
 
 CONFIG = {
     'check_structure': False,
@@ -87,8 +87,6 @@ def get_variables_from_pyscript(file_path):
 
 
 def evaluation_function(response, answer, check_list, modules):
-    # it needs to append global variables from previous cells
-
     if isinstance(check_list, str):
         check_list = [var.strip() for var in check_list.split(',')]
     is_defined = True
@@ -101,6 +99,14 @@ def evaluation_function(response, answer, check_list, modules):
     response = f"{modules}\n{add_missing_global_variables(response, 'Response')}\n{response}"
     answer = f"{modules}\n{add_missing_global_variables(answer, 'Answer')}\n{answer}"
 
+    has_ans_image = is_image_exist(code_str=answer)
+    has_res_image = is_image_exist(code_str=response)
+
+    tmp = answer
+    if has_ans_image:
+        # hide image output
+        answer = hide_images(answer, modules)
+        response = hide_images(response, modules)
 
     general_feedback = check(response)
     is_correct_answer, msg = check_syntax(answer)
@@ -116,6 +122,24 @@ def evaluation_function(response, answer, check_list, modules):
             print(wrong_msg + "The methods or classes are not correctly defined.")
             return
 
+    if has_ans_image:
+        if not has_res_image:
+            print(wrong_msg + "The answer has graphs but seems like you did not have plotting methods included")
+            return
+        else:
+            print("We detect the plot method, "
+                  "please check the difference below (Notice that we have no method to check your plot) : ")
+            ipython = get_ipython()
+            ipython.run_cell(tmp)
+    else:
+
+        if has_res_image:
+            print("You have additional plots but the answer does not have")
+
+    del tmp
+    del has_ans_image
+    del has_res_image
+
     if msg:
         if not check_answer_with_output(response, msg):
             # if check_list != 0, it means that output is not the importance
@@ -125,17 +149,14 @@ def evaluation_function(response, answer, check_list, modules):
                 return
         else:
             print(correct_msg)
-
-            set_global_var_dict(variable_content(response), variable_content(answer))
-            set_global_method_dict(extract_names_and_body(response), extract_names_and_body(answer))
+            save_globals(response, answer)
 
             return
     else:
         if check_each_letter(response, answer):
             print(correct_msg)
 
-            set_global_var_dict(variable_content(response), variable_content(answer))
-            set_global_method_dict(extract_names_and_body(response), extract_names_and_body(answer))
+            save_globals(response, answer)
 
             return
 
@@ -150,8 +171,7 @@ def evaluation_function(response, answer, check_list, modules):
             if len(remaining_check_list) == 0:
                 print(correct_msg)
 
-                set_global_var_dict(variable_content(response), variable_content(answer))
-                set_global_method_dict(extract_names_and_body(response), extract_names_and_body(answer))
+                save_globals(response, answer)
 
                 return
 
@@ -160,8 +180,7 @@ def evaluation_function(response, answer, check_list, modules):
             if feedback != "NotDefined":
                 print(correct_msg)
 
-                set_global_var_dict(variable_content(response), variable_content(answer))
-                set_global_method_dict(extract_names_and_body(response), extract_names_and_body(answer))
+                save_globals(response, answer)
 
                 return
         else:
@@ -219,3 +238,10 @@ def get_response():
         else:
             response_lines = cell_lines + response_lines
             idx -= 1
+
+
+def save_globals(response, answer):
+    _, res_var_dict = extract_modules(variable_content(response))
+    _, ans_var_dict = extract_modules(variable_content(answer))
+    set_global_var_dict(res_var_dict, ans_var_dict)
+    set_global_method_dict(extract_names_and_body(response), extract_names_and_body(answer))

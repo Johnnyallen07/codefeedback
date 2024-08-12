@@ -1,11 +1,11 @@
 from .globals import get_global_variables
-
+from .method_utils import extract_method_names
 try:
     from .format import message_format, response_format, variable_format
 except ImportError:
     from format import message_format, response_format, variable_format
 import subprocess
-
+import ast
 
 def check_indents(formatted_code_lines) -> bool:
     """
@@ -70,6 +70,8 @@ def check_syntax(code_string) -> (bool, str):
 def add_missing_global_variables(code_str, side):
     global_var_dict, global_method_dict = get_global_variables(code_str, side)
     var_str = variable_format(global_var_dict)
-    method_str = "\n".join(body for body in global_method_dict.values())
+
+    exist_methods = extract_method_names(ast.parse(code_str))
+    method_str = "\n".join(body for name, body in global_method_dict.items() if name not in exist_methods)
     return f"{var_str}\n{method_str}"
 

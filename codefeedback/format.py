@@ -106,3 +106,8 @@ def local_missing_modules_and_variables_format(modules, var_dict):
 
 def variable_format(var_dict):
     return "\n".join([f"{key}={value}" for key, value in var_dict.items() if value is not None])
+
+
+
+def np_array_format():
+    pass

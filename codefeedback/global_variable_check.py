@@ -3,6 +3,8 @@ import builtins
 import types
 import copy
 import numpy as np
+import io
+import contextlib
 
 try:
     from .same_variable_content_check import check_same_content_with_different_variable
@@ -20,10 +22,12 @@ class VariableVisitor(ast.NodeVisitor):
         # Skip the function name and only visit the body
         for stmt in node.body:
             self.visit(stmt)
+
     def visit_Name(self, node):
         if node.id not in dir(builtins):
             self.variables.add(node.id)
         self.generic_visit(node)
+
 
 # Function to execute the code and check the content of variables
 def variable_content(code_str) -> dict:
@@ -33,7 +37,9 @@ def variable_content(code_str) -> dict:
     variables = visitor.variables
     context = {}
     try:
-        exec(code_str, context)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            exec(code_str, context)
     except NameError:
         return {"err": ""}
     except SystemExit:

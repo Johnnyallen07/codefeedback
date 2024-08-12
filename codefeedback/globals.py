@@ -1,5 +1,5 @@
 import ast
-
+import numpy as np
 try:
     from .method_utils import extract_method_names
     from .global_variable_check import VariableVisitor
@@ -14,10 +14,17 @@ global_ans_methods = {}
 
 
 def set_global_var_dict(res_var_dict: dict, ans_var_dict):
+    # TODO: different types of value should be formatted before save
     for key, value in res_var_dict.items():
-        set_global_variables(key, value, 'Response')
+        if isinstance(value, np.ndarray):
+            set_global_variables(key, f"np.array({value.tolist()})", 'Response')
+        else:
+            set_global_variables(key, value, 'Response')
     for key, value in ans_var_dict.items():
-        set_global_variables(key, value, 'Answer')
+        if isinstance(value, np.ndarray):
+            set_global_variables(key, f"np.array({value.tolist()})", 'Answer')
+        else:
+            set_global_variables(key, value, 'Answer')
 
 
 def set_global_variables(variable_name, value, side):
