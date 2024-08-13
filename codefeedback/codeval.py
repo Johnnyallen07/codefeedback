@@ -5,12 +5,16 @@ from IPython import get_ipython
 
 # try:
 from .plt_manage import is_image_exist, hide_images
-from .global_variable_check import check_global_variable_content, variable_content
+from .global_variable_check import check_global_variable_content, variable_content, get_err_vars
 from .local_variable_check import check_local_variable_content, extract_modules
 from .structure_check import check_structure
 from .globals import set_global_var_dict, set_global_method_dict
 from .method_utils import extract_names_and_body
 from .general_check import check, check_syntax, add_missing_global_variables
+from .file_loader import *
+from .feedback_msg import display_feedback
+from .format import code_format
+from .compare import variables_content_compare
 # except ImportError:
 #     pass
 #     from general_check import check, check_syntax
@@ -38,21 +42,35 @@ class MyMagics(Magics):
     def load(self, line):
         """Load a Python script and extract variables."""
         script_name = line.strip()
+
         if not script_name:
             print("Please provide a script name.")
             return
 
-        solutions = get_variables_from_pyscript(script_name)
-        if not solutions:
-            print(f"Could not load any variables from {script_name}.")
-        else:
-            try:
-                self.solutions = solutions['solution']
-            except KeyError:
-                print("The variable 'solution' is not defined")
-                return
-            finally:
+        ext = script_name.split('.')[-1]
+        if ext == 'py':
+            solutions = get_variables_from_pyscript(script_name)
+            if not solutions:
+                print(f"Could not load any variables from {script_name}.")
+            else:
+                try:
+                    self.solutions = solutions['solution']
+                except KeyError:
+                    print("The variable 'solution' is not defined")
+                    return
                 print(f"Successfully loaded solutions from: {script_name}")
+        elif ext == 'csv':
+            try:
+                solutions = get_variables_from_csv(script_name)
+            except Exception:
+                print("Please check the format of the answer")
+                return
+            self.solutions = solutions
+            print(f"Successfully loaded solutions from: {script_name}")
+
+        else:
+            print("Please check the file types")
+            return
 
     @line_magic
     def check(self, line):
@@ -78,22 +96,16 @@ def load_ipython_extension(ipython):
     print("Successfully loaded the extension")
 
 
-def get_variables_from_pyscript(file_path):
-    with open(file_path, 'r') as file:
-        script_content = file.read()
-    variables = {}
-    exec(script_content, globals(), variables)
-    return variables
-
-
 def evaluation_function(response, answer, check_list, modules):
     if isinstance(check_list, str):
         check_list = [var.strip() for var in check_list.split(',')]
     is_defined = True
     if len(check_list) == 0:
         is_defined = False
-    wrong_msg = random.choice(["The response is not correct: ", "The code has some problems: ", "Wrong: "])
-    correct_msg = random.choice(["Good Job!", "Well Done!", "Awesome"])
+
+    # reduce unnecessary codes
+    response = code_format(response)
+    answer = code_format(answer)
 
     # the missing module and previous global variables should be imported manually:
     response = f"{modules}\n{add_missing_global_variables(response, 'Response')}\n{response}"
@@ -114,17 +126,20 @@ def evaluation_function(response, answer, check_list, modules):
         print("SyntaxError: Please contact your teacher to give correct answer!")
         return
     if general_feedback != "General check passed!":
-        print(wrong_msg + general_feedback)
+        display_feedback(False)
+        print(general_feedback)
         return
 
     if CONFIG['check_structure']:
         if not check_structure(response, answer):
-            print(wrong_msg + "The methods or classes are not correctly defined.")
+            display_feedback(False)
+            print("The methods or classes are not correctly defined.")
             return
 
     if has_ans_image:
         if not has_res_image:
-            print(wrong_msg + "The answer has graphs but seems like you did not have plotting methods included")
+            display_feedback(False)
+            print("The answer has graphs but seems like you did not have plotting methods included")
             return
         else:
             print("We detect the plot method, "
@@ -145,19 +160,17 @@ def evaluation_function(response, answer, check_list, modules):
             # if check_list != 0, it means that output is not the importance
             if len(check_list) == 0:
                 error_feedback = "The output is different to given answer: \n"
-                print(wrong_msg + error_feedback)
+                display_feedback(False)
+                print(error_feedback)
                 return
         else:
-            print(correct_msg)
+            display_feedback(True)
             save_globals(response, answer)
-
             return
     else:
         if check_each_letter(response, answer):
-            print(correct_msg)
-
+            display_feedback(True)
             save_globals(response, answer)
-
             return
 
     if is_defined:
@@ -165,26 +178,28 @@ def evaluation_function(response, answer, check_list, modules):
         is_correct, feedback, remaining_check_list, response = check_global_variable_content(response, answer,
                                                                                              check_list)
         if not is_correct:
-            print(wrong_msg + feedback)
+            display_feedback(False)
+            print(feedback)
+            _, res_var_dict = extract_modules(variable_content(response))
+            _, ans_var_dict = extract_modules(variable_content(answer))
+            variable_list = get_err_vars()
+            print(variables_content_compare(variable_list, res_var_dict, ans_var_dict))
             return
         else:
             if len(remaining_check_list) == 0:
-                print(correct_msg)
-
+                display_feedback(True)
                 save_globals(response, answer)
-
                 return
 
         is_correct, feedback = check_local_variable_content(response, answer, remaining_check_list)
         if is_correct:
             if feedback != "NotDefined":
-                print(correct_msg)
-
+                display_feedback(True)
                 save_globals(response, answer)
-
                 return
         else:
-            print(wrong_msg + feedback)
+            display_feedback(False)
+            print(feedback)
             return
 
     print("The AI feedback functionality will be implemented after permission and security check")

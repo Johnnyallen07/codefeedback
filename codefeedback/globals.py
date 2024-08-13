@@ -18,11 +18,15 @@ def set_global_var_dict(res_var_dict: dict, ans_var_dict):
     for key, value in res_var_dict.items():
         if isinstance(value, np.ndarray):
             set_global_variables(key, f"np.array({value.tolist()})", 'Response')
+        elif isinstance(value, str):
+            set_global_variables(key, f"'{value}'", 'Response')
         else:
             set_global_variables(key, value, 'Response')
     for key, value in ans_var_dict.items():
         if isinstance(value, np.ndarray):
             set_global_variables(key, f"np.array({value.tolist()})", 'Answer')
+        elif isinstance(value, str):
+            set_global_variables(key, f"'{value}'", 'Answer')
         else:
             set_global_variables(key, value, 'Answer')
 

@@ -72,23 +72,18 @@ def ai_content_format(reply_content):
     return result
 
 
-def annotation_format(code_string):
-    """
-    This format includes:
-    replace annotation to a single line
-    """
-    # TODO
-    pass
-
-
-def response_format(code_string):
+def code_format(code_string) -> str:
     """
     This format includes:
     remove the unnecessary indents
-    categorize the structure of the format: classes and methods
+    remove comments
     """
+    code_string = re.sub(r'#.*', '', code_string)
     code_lines = code_string.strip().split('\n')
-    return [re.sub(r'\n\s*\n+', '\n', code_line) for code_line in code_lines]
+    code_lines = [re.sub(r'\n\s*\n+', '\n', code_line) for code_line in code_lines]
+
+    return "\n".join(code_lines)
+
 
 
 def local_missing_modules_and_variables_format(modules, var_dict):

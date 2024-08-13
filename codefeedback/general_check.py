@@ -1,17 +1,18 @@
 from .globals import get_global_variables
 from .method_utils import extract_method_names
-try:
-    from .format import message_format, response_format, variable_format
-except ImportError:
-    from format import message_format, response_format, variable_format
+# try:
+from .format import message_format, variable_format
+# except ImportError:
+#     from format import message_format, variable_format
 import subprocess
 import ast
 
-def check_indents(formatted_code_lines) -> bool:
+def check_indents(code_str: str) -> bool:
     """
     This function checks the indentation correctness of the given Python code.
     Notice that indentation depends on student preference: (2 spaces or 4 spaces are acceptable)
     """
+    formatted_code_lines = code_str.split('\n')
     indent_levels = []
     for line in formatted_code_lines:
         indent_level = len(line) - len(line.lstrip(' '))
@@ -40,8 +41,7 @@ def check_indents(formatted_code_lines) -> bool:
 
 
 def check(code_string):
-    formatted_code_lines = response_format(code_string)
-    if not check_indents(formatted_code_lines):
+    if not check_indents(code_string):
         return f"Indent error, the indent should only be multiple of 2 or 4"
     # import necessary modules dynamically (not in use)
     # module_import(formatted_code_lines)
