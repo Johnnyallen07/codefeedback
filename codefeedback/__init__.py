@@ -1,1 +1,1 @@
-from .codeval import load_ipython_extension, config, load_module
+from .codeval import load_ipython_extension, load_module

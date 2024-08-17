@@ -1,7 +1,7 @@
-from .globals import get_global_variables
-from .method_utils import extract_method_names
+from codefeedback.mevars.globals import get_global_variables
+from codefeedback.utils.method_utils import extract_method_names
 # try:
-from .format import message_format, variable_format
+from codefeedback.format.general_format import message_format, variable_format
 # except ImportError:
 #     from format import message_format, variable_format
 import subprocess

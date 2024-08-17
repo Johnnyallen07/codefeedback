@@ -1,11 +1,7 @@
 import ast
 import numpy as np
-try:
-    from .method_utils import extract_method_names
-    from .global_variable_check import VariableVisitor
-except ImportError:
-    from method_utils import extract_method_names
-    from global_variable_check import VariableVisitor
+from codefeedback.checks.global_variable_check import VariableVisitor
+
 
 global_res_variables = {}
 global_res_methods = {}

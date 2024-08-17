@@ -1,34 +1,24 @@
-import random
 import subprocess
 from IPython.core.magic import Magics, magics_class, line_magic
 from IPython import get_ipython
 
+from codefeedback.mevars.configs import change_config, get_config, change_default_config
+from codefeedback.mevars.stats import set_wrong_task, get_wrong_task_count
 # try:
-from .plt_manage import is_image_exist, hide_images
-from .global_variable_check import check_global_variable_content, variable_content, get_err_vars
-from .local_variable_check import check_local_variable_content, extract_modules
-from .structure_check import check_structure
-from .globals import set_global_var_dict, set_global_method_dict
-from .method_utils import extract_names_and_body
-from .general_check import check, check_syntax, add_missing_global_variables
-from .file_loader import *
-from .feedback_msg import display_feedback
-from .format import code_format
-from .compare import variables_content_compare
-# except ImportError:
-#     pass
-#     from general_check import check, check_syntax
-#     from global_variable_check import check_global_variable_content, variable_content
-#     from local_variable_check import check_local_variable_content
-#     from structure_check import check_structure
-#     from globals import set_global_var_dict, set_global_method_dict
-#     from method_utils import extract_names_and_body
-#     from plt_manage import is_image_exist, hide_image_output
+from codefeedback.utils.plt_manage_utils import is_image_exist, hide_images
+from codefeedback.utils.file_utils import *
+from codefeedback.utils.method_utils import extract_names_and_body
 
-CONFIG = {
-    'check_structure': False,
-    'modules': ""
-}
+from codefeedback.checks.global_variable_check import check_global_variable_content, variable_content, get_err_vars
+from codefeedback.checks.local_variable_check import check_local_variable_content, extract_modules
+from codefeedback.checks.structure_check import check_structure, check_loops
+from codefeedback.mevars.globals import set_global_var_dict, set_global_method_dict
+
+from codefeedback.checks.general_check import check, check_syntax, add_missing_global_variables
+
+from codefeedback.format.display_message_format import display_feedback
+from codefeedback.format.general_format import code_format
+from codefeedback.format.compare_format import variables_content_compare
 
 
 @magics_class
@@ -77,10 +67,12 @@ class MyMagics(Magics):
 
         response = get_response()
         task_name = line.strip()
-        check_list, answer = self.solutions[task_name]
+        check_list, answer, configs = self.solutions[task_name]
+        change_config(configs)
+        CONFIG = get_config()
         if self.modules == "":
             self.modules = CONFIG['modules']
-        evaluation_function(response, answer, check_list, self.modules)
+        evaluation_function(response, answer, check_list, self.modules, CONFIG, task_name)
 
     @line_magic
     def load_module(self, line):
@@ -96,7 +88,14 @@ def load_ipython_extension(ipython):
     print("Successfully loaded the extension")
 
 
-def evaluation_function(response, answer, check_list, modules):
+def evaluation_function(response, answer, check_list, modules, CONFIG, task_name):
+    if get_wrong_task_count(task_name) == CONFIG['max_wrong_times']:
+        if CONFIG['display_answer']:
+            display_feedback(False)
+            print("We notices that you repeatedly got wrong at certain question, please refer to the following answer"
+                  " and find the difference:\n")
+            print(answer)
+            return
     if isinstance(check_list, str):
         check_list = [var.strip() for var in check_list.split(',')]
     is_defined = True
@@ -130,15 +129,25 @@ def evaluation_function(response, answer, check_list, modules):
         print(general_feedback)
         return
 
-    if CONFIG['check_structure']:
+    if CONFIG['structure_check']:
         if not check_structure(response, answer):
             display_feedback(False)
+            set_wrong_task(task_name)
             print("The methods or classes are not correctly defined.")
+            return
+
+    if CONFIG['check_for'] or CONFIG['check_while'] or CONFIG['check_loop']:
+        is_correct, feedback = check_loops(response, answer)
+        if not is_correct:
+            display_feedback(False)
+            set_wrong_task(task_name)
+            print(feedback)
             return
 
     if has_ans_image:
         if not has_res_image:
             display_feedback(False)
+            set_wrong_task(task_name)
             print("The answer has graphs but seems like you did not have plotting methods included")
             return
         else:
@@ -147,7 +156,6 @@ def evaluation_function(response, answer, check_list, modules):
             ipython = get_ipython()
             ipython.run_cell(tmp)
     else:
-
         if has_res_image:
             print("You have additional plots but the answer does not have")
 
@@ -161,6 +169,7 @@ def evaluation_function(response, answer, check_list, modules):
             if len(check_list) == 0:
                 error_feedback = "The output is different to given answer: \n"
                 display_feedback(False)
+                set_wrong_task(task_name)
                 print(error_feedback)
                 return
         else:
@@ -179,6 +188,7 @@ def evaluation_function(response, answer, check_list, modules):
                                                                                              check_list)
         if not is_correct:
             display_feedback(False)
+            set_wrong_task(task_name)
             print(feedback)
             _, res_var_dict = extract_modules(variable_content(response))
             _, ans_var_dict = extract_modules(variable_content(answer))
@@ -199,14 +209,11 @@ def evaluation_function(response, answer, check_list, modules):
                 return
         else:
             display_feedback(False)
+            set_wrong_task(task_name)
             print(feedback)
             return
 
     print("The AI feedback functionality will be implemented after permission and security check")
-
-
-def config(check_structure: bool = False):
-    CONFIG['check_structure'] = check_structure
 
 
 def check_answer_with_output(response, output_msg):
@@ -235,7 +242,7 @@ def check_each_letter(response, answer):
 
 
 def load_module(modules):
-    CONFIG['modules'] = modules
+    change_default_config({'modules': modules})
     print("Successfully loaded required modules")
 
 

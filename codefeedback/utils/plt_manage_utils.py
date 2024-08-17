@@ -1,8 +1,7 @@
-import subprocess
 import ast
 import astor
-from .method_utils import extract_method_attr
-from .module_utils import get_specific_module_alias
+from codefeedback.utils.method_utils import extract_method_attr
+from codefeedback.utils.module_utils import get_specific_module_alias
 
 COMMON_PLOT_METHODS = ["plot", "scatter", "bar", "hist", "show"]
 

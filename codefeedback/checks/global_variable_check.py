@@ -6,12 +6,11 @@ import numpy as np
 import io
 import contextlib
 
-try:
-    from .same_variable_content_check import check_same_content_with_different_variable
-except ImportError:
-    from same_variable_content_check import check_same_content_with_different_variable
+from codefeedback.mevars.configs import get_config
+from codefeedback.checks.same_variable_content_check import check_same_content_with_different_variable
 
-tolerance = 1e-8
+
+tolerance = get_config()['tolerance']
 GLOBAL_ERR_VAR_CONTENT = []
 
 
@@ -144,7 +143,7 @@ def is_equal(variable_name, response_variable_content, answer_variable_content, 
 
     if isinstance(answer_variable_content, np.ndarray):
         try:
-            is_correct = np.allclose(response_variable_content, answer_variable_content)
+            is_correct = np.allclose(response_variable_content, answer_variable_content, atol=tolerance)
         except Exception as e:
             return False, f"{type(e).__name__} of '{variable_name}': {e}", error_var_contents, remaining_check_list
 

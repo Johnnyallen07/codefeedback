@@ -1,25 +1,16 @@
 """
 The script is used only the Teacher forgets to input the check_list, or lacking of global variables
 """
-import re
-import ast
 import sys
-import types
 import itertools
-import astor
 
-from .module_utils import extract_modules
+from codefeedback.utils.module_utils import extract_modules
+from codefeedback.checks.global_variable_check import variable_content, check_global_variable_content
+from codefeedback.format.general_format import local_missing_modules_and_variables_format
+from codefeedback.utils.param_utils import param_generator, guess_param_type
+from codefeedback.checks.same_variable_content_check import check_same_content_with_different_variable
+from codefeedback.utils.method_utils import extract_params_and_body
 
-try:
-    from .global_variable_check import variable_content, check_global_variable_content
-    from .format import local_missing_modules_and_variables_format
-    from .param_generator import param_generator, guess_param_type
-    from .same_variable_content_check import check_same_content_with_different_variable
-    from .method_utils import extract_params_and_body
-except:
-    from global_variable_check import variable_content, check_global_variable_content
-    from format import local_missing_modules_and_variables_format
-    from method_utils import extract_params_and_body
 
 
 # code = """
@@ -70,7 +61,7 @@ def check_local_variable_content(response, answer, check_list: list):
             answer_params_dict = {param: guess_param_type(param, answer_body) for param in answer_arg_list}
             response_params_dict = {param: guess_param_type(param, response_body) for param in response_arg_list}
             response_body, response_params_dict = check_same_content_with_different_variable(
-                response_body, response_params_dict, answer_params_dict, mode='param')
+                response_body, response_params_dict, answer_params_dict, [], mode='param')
 
             if response_params_dict != answer_params_dict:
                 if method_name in remaining_check_list:
