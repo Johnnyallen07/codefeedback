@@ -2,23 +2,25 @@ import subprocess
 from IPython.core.magic import Magics, magics_class, line_magic
 from IPython import get_ipython
 
-from codefeedback.mevars.configs import change_config, get_config, change_default_config
-from codefeedback.mevars.stats import set_wrong_task, get_wrong_task_count
+from .checks.ai_checks import ai_prompt_check
+from .format.output_traceback_format import output_diffs
+from .mevars.configs import change_config, get_config, change_default_config
+from .mevars.stats import set_wrong_task, get_wrong_task_count
 # try:
-from codefeedback.utils.plt_manage_utils import is_image_exist, hide_images
-from codefeedback.utils.file_utils import *
-from codefeedback.utils.method_utils import extract_names_and_body
+from .utils.plt_manage_utils import is_image_exist, hide_images
+from .utils.file_utils import *
+from .utils.method_utils import extract_names_and_body
 
-from codefeedback.checks.global_variable_check import check_global_variable_content, variable_content, get_err_vars
-from codefeedback.checks.local_variable_check import check_local_variable_content, extract_modules
-from codefeedback.checks.structure_check import check_structure, check_loops
-from codefeedback.mevars.globals import set_global_var_dict, set_global_method_dict
+from .checks.global_variable_check import check_global_variable_content, variable_content, get_err_vars
+from .checks.local_variable_check import check_local_variable_content, extract_modules
+from .checks.structure_check import check_structure, check_loops
+from .mevars.globals import set_global_var_dict, set_global_method_dict
 
-from codefeedback.checks.general_check import check, check_syntax, add_missing_global_variables
+from .checks.general_check import check, check_syntax, add_missing_global_variables
 
-from codefeedback.format.display_message_format import display_feedback
-from codefeedback.format.general_format import code_format
-from codefeedback.format.compare_format import variables_content_compare
+from .format.display_message_format import display_feedback
+from .format.general_format import code_format
+from .format.compare_format import variables_content_compare
 
 
 @magics_class
@@ -90,12 +92,23 @@ def load_ipython_extension(ipython):
 
 def evaluation_function(response, answer, check_list, modules, CONFIG, task_name):
     if get_wrong_task_count(task_name) == CONFIG['max_wrong_times']:
-        if CONFIG['display_answer']:
-            display_feedback(False)
-            print("We notices that you repeatedly got wrong at certain question, please refer to the following answer"
-                  " and find the difference:\n")
-            print(answer)
-            return
+        display_feedback(False)
+        print("We notice that you repeatedly got wrong at certain question many times, "
+              "please check the following answer")
+        print(answer)
+        if CONFIG['ai_in_use']:
+            is_correct, feedback = ai_prompt_check(response, answer)
+            if is_correct:
+                print("Warning: AI checking is not 100% accurate, please check the feedback below:")
+                print(feedback)
+            else:
+                if "No api key is provided" == feedback or "Incorrect api key" == feedback:
+                    print(feedback)
+                else:
+                    display_feedback(False)
+                    print(feedback)
+        return
+
     if isinstance(check_list, str):
         check_list = [var.strip() for var in check_list.split(',')]
     is_defined = True
@@ -164,13 +177,15 @@ def evaluation_function(response, answer, check_list, modules, CONFIG, task_name
     del has_res_image
 
     if msg:
-        if not check_answer_with_output(response, msg):
+        is_correct, res_msg = check_answer_with_output(response, msg)
+        if not is_correct:
             # if check_list != 0, it means that output is not the importance
             if len(check_list) == 0:
-                error_feedback = "The output is different to given answer: \n"
                 display_feedback(False)
+                error_feedback = "The output is different to given answer: \n"
+                diffs = output_diffs(res_msg, msg)
                 set_wrong_task(task_name)
-                print(error_feedback)
+                print(error_feedback + diffs)
                 return
         else:
             display_feedback(True)
@@ -213,7 +228,28 @@ def evaluation_function(response, answer, check_list, modules, CONFIG, task_name
             print(feedback)
             return
 
-    print("The AI feedback functionality will be implemented after permission and security check")
+    if CONFIG['ai_in_use']:
+        is_correct, feedback = ai_prompt_check(response, answer)
+        if is_correct:
+            display_feedback(True)
+            print("Warning: AI checking is not 100% accurate, please check the feedback below:")
+            print(feedback)
+        else:
+            if "No api key is provided" == feedback or "Incorrect api key" == feedback:
+                print(feedback)
+            else:
+                display_feedback(False)
+                print("Warning: AI checking is not 100% accurate, please check the feedback below:")
+                print(feedback)
+    else:
+        print("We currently have no method to check your code: ")
+        print("The question is not allowed to use AI for check")
+
+        if not CONFIG['display_answer']:
+            print("The question is not allowed to reveal the answer")
+        else:
+            print("Please check the following codes: ")
+            print(answer)
 
 
 def check_answer_with_output(response, output_msg):
@@ -229,7 +265,7 @@ def check_answer_with_output(response, output_msg):
             res_feedback = res_result.stdout.strip()
     except Exception as e:
         res_feedback = f"Exception occurred: {str(e)}"
-    return check_each_letter(res_feedback, output_msg)
+    return check_each_letter(res_feedback, output_msg), res_feedback
 
 
 def check_each_letter(response, answer):

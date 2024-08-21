@@ -71,6 +71,7 @@ def check_local_variable_content(response, answer, check_list: list):
             # There are tiny probability that the generated answer is false positive
             correct_count = 0
             false_count = 0
+            not_defined_count = 0
             is_next = False
 
             for _ in range(5):
@@ -101,15 +102,18 @@ def check_local_variable_content(response, answer, check_list: list):
                             if len(remaining_check_list) == 0:
                                 return True, ""
                             else:
-
                                 is_next = True
                         correct_count += 1
                     elif not is_correct and feedback != "NameError":
                         false_count += 1
+                    elif feedback == "NotDefined":
+                        not_defined_count += 1
+
                     if false_count > 1:
                         if feedback != "NameError" and method_name in remaining_check_list:
                             return False, f"The method {method_name} is not correct: {feedback}"
-
+                    if not_defined_count > 1:
+                        return True, "NotDefined"
 
 
         else:
@@ -120,6 +124,9 @@ def check_local_variable_content(response, answer, check_list: list):
 
             response_var_dict.update(variable_content(response_body))
             answer_var_dict.update(variable_content(answer_body))
+            response_var_dict.pop('TMP', 'NA')
+            answer_var_dict.pop('TMP', 'NA')
+
             is_correct, feedback, remaining_check_list, response_body = check_global_variable_content(response_body,
                                                                                                       answer_body,
                                                                                                       remaining_check_list)

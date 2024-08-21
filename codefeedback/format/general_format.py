@@ -85,7 +85,6 @@ def code_format(code_string) -> str:
     return "\n".join(code_lines)
 
 
-
 def local_missing_modules_and_variables_format(modules, var_dict):
     import_statements = []
     for var_name, module_name in modules:
@@ -103,6 +102,18 @@ def variable_format(var_dict):
     return "\n".join([f"{key}={value}" for key, value in var_dict.items() if value is not None])
 
 
+def ai_content_format(reply_content):
+    result = {}
+    is_correct = True
 
-def np_array_format():
-    pass
+    # get the Bool pair:
+    pair_idx = reply_content.find("Feedback")
+    bool_msg = reply_content[:pair_idx]
+    feedback_msg = reply_content[pair_idx:]
+    if 'True' in bool_msg:
+        is_correct = True
+    else:
+        is_correct = False
+    feedback = feedback_msg[feedback_msg.find(': ') + 1:].lstrip()
+
+    return is_correct, feedback

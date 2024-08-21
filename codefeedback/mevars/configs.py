@@ -6,7 +6,8 @@ DEFAULT_CONFIG = {
     'check_while': False,
     'check_loop': False,
     'display_answer': True,
-    'max_wrong_times': 3
+    'max_wrong_times': 3,
+    'ai_in_use': True
 }
 
 CONFIG = {}

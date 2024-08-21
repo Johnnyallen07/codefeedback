@@ -113,6 +113,8 @@ def check_global_variable_content(response, answer, check_list: list):
                 return False, "The return statement is lacking", remaining_check_list, response
             elif "TMP" in response_var_set:
                 return False, "The return statement is redundant", remaining_check_list, response
+            else:
+                return True, "NotDefined", remaining_check_list, response
 
     if len(error_var_contents) == 0:
         if is_defined:

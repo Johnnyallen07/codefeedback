@@ -5,38 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec4c6df-04af-4ba7-890c-c1e3e1eebae1" name="Changes" comment="update all functionalities implemented from compareConstruct">
-      <change afterPath="$PROJECT_DIR$/codefeedback/checks/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/format/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/mevars/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/mevars/configs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/mevars/stats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codefeedback/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/QuickStart/ans.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/QuickStart/e1.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/answer2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/different_clr.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codefeedback/format/output_traceback_format.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/QuickStart/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/checks/global_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/global_variable_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/checks/local_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/local_variable_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codefeedback/codeval.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/codeval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/format/compare_format.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/feedback_msg.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/format/display_message_format.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/file_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/utils/file_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/format/general_format.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/general_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/general_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/global_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/global_variable_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/mevars/globals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/local_variable_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/local_variable_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/method_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/utils/method_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/module_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/utils/module_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/param_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/utils/param_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/plt_manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/utils/plt_manage_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/same_variable_content_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/same_variable_content_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codefeedback/structure_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/structure_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/Example.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/answer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/answer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/answer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/format/general_format.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/format/general_format.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codefeedback/mevars/configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/mevars/configs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/QuickStart/ans.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/QuickStart/ans.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/QuickStart/e1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/example/QuickStart/e1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/answer2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/different_clr.py" beforeDir="false" afterPath="$PROJECT_DIR$/codefeedback/checks/ai_checks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +51,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/CT project/codefeedback/codefeedback&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/CT project/codefeedback/codefeedback/checks&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -81,17 +62,42 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\checks" />
+      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\utils" />
+      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\format" />
       <recent name="D:\Desktop\CT project\codefeedback\codefeedback" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Desktop\CT project\codefeedback\example\QuickStart" />
+      <recent name="D:\Desktop\CT project\codefeedback\example" />
+      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\checks" />
       <recent name="D:\Desktop\CT project\codefeedback\codefeedback\utils" />
       <recent name="D:\Desktop\CT project\codefeedback\codefeedback\mevars" />
-      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\format" />
-      <recent name="D:\Desktop\CT project\codefeedback\codefeedback\checks" />
-      <recent name="D:\Desktop\CT project\codefeedback\example" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.different_clr">
+  <component name="RunManager" selected="Python.ai_checks">
+    <configuration name="ai_checks" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="codefeedback" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codefeedback/checks" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codefeedback/checks/ai_checks.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="compare_format" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="codefeedback" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,7 +164,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="global_variable_check" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="general_format" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="codefeedback" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -166,12 +172,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codefeedback" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codefeedback/format" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\Desktop\CT project\codefeedback\codefeedback\checks\global_variable_check.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/codefeedback/format/general_format.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -202,35 +208,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="method_utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="codefeedback" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/codefeedback" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\Desktop\CT project\codefeedback\codefeedback\utils\method_utils.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ai_checks" />
+        <item itemvalue="Python.general_format" />
         <item itemvalue="Python.different_clr" />
         <item itemvalue="Python.configs" />
         <item itemvalue="Python.compare_format" />
-        <item itemvalue="Python.global_variable_check" />
-        <item itemvalue="Python.method_utils" />
       </list>
     </recent_temporary>
   </component>
@@ -263,6 +247,12 @@
       <workItem from="1723696425202" duration="1459000" />
       <workItem from="1723795173742" duration="3219000" />
       <workItem from="1723881030995" duration="9899000" />
+      <workItem from="1723907188204" duration="610000" />
+      <workItem from="1724061909541" duration="5548000" />
+      <workItem from="1724129720038" duration="15000" />
+      <workItem from="1724129752483" duration="440000" />
+      <workItem from="1724144561753" duration="10264000" />
+      <workItem from="1724219280509" duration="1363000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;init&quot;">
       <created>1722264210733</created>
@@ -364,16 +354,34 @@
     <MESSAGE value="The variable difference will be displayed to the console" />
     <option name="LAST_COMMIT_MESSAGE" value="The variable difference will be displayed to the console" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codefeedback/checks/local_variable_check.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codefeedback/checks/ai_checks.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/codefeedback$codeval__1_.coverage" NAME="codeval (1) Coverage Results" MODIFIED="1722864708835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
     <SUITE FILE_PATH="coverage/codefeedback$main.coverage" NAME="main Coverage Results" MODIFIED="1722318391895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/codefeedback$answer.coverage" NAME="answer Coverage Results" MODIFIED="1722695232166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/codefeedback$method_utils.coverage" NAME="method_utils Coverage Results" MODIFIED="1722872103045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
     <SUITE FILE_PATH="coverage/codefeedback$global_variable_check.coverage" NAME="global_variable_check Coverage Results" MODIFIED="1722874325646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
+    <SUITE FILE_PATH="coverage/codefeedback$ai_checks.coverage" NAME="ai_checks Coverage Results" MODIFIED="1724172096133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback/checks" />
     <SUITE FILE_PATH="coverage/codefeedback$add_global_vars.coverage" NAME="add_global_vars Coverage Results" MODIFIED="1722865300140" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/codefeedback$hello.coverage" NAME="codeval Coverage Results" MODIFIED="1722321237441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
+    <SUITE FILE_PATH="coverage/codefeedback$general_format.coverage" NAME="general_format Coverage Results" MODIFIED="1724165344356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback/format" />
     <SUITE FILE_PATH="coverage/codefeedback$configs.coverage" NAME="configs Coverage Results" MODIFIED="1723884157217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
-    <SUITE FILE_PATH="coverage/codefeedback$different_clr.coverage" NAME="different_clr Coverage Results" MODIFIED="1723891749157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/codefeedback$different_clr.coverage" NAME="different_clr Coverage Results" MODIFIED="1724072524412" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/codefeedback$compare.coverage" NAME="compare Coverage Results" MODIFIED="1723531410565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/codefeedback" />
   </component>
 </project>
